@@ -1,0 +1,29 @@
+- name: Install Customs for VMs
+  hosts: all
+  tasks:
+    - name: update
+      apt:
+        update_cache: yes
+
+    - name: Install Tools
+      apt: name={{ item }} state=present
+      with_items:
+       - vim
+       - curl
+       - git
+       - htop
+       - zsh
+       - tmux
+
+    - name: Make directory for Pathogen
+      command: mkdir -p ~/.vim/autoload ~/.vim/bundle
+      
+    - name: Install Pathogen
+      command: curl -LSso ~/.vim/autoload/pathogen.vim https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+ 
+...
+
+
+
+
+
