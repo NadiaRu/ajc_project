@@ -33,8 +33,8 @@
 	* site web statique (apache)
 	* php (apache)
 	* python web (package django)
-bla
-nadia
+
+
 
 
 
