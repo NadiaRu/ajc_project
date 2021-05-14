@@ -1,0 +1,40 @@
+---
+- name: gestion utilisateurs
+  hosts: localhost
+  #déclaration des variables
+  vars: 
+    users: 
+      - username: "lorine"
+      - username: "nadia"
+      - username: "remy"
+      - username: "thibaut"
+  tasks: 
+    - name: create group
+      group: 
+        name: admins
+        state: present
+    - name: change permissions for project folder
+      file: 
+        path: /home/nours_project
+        state: directory
+        recurse: yes
+        owner: remy
+        group: admins
+        mode: '770'
+
+    - name: create user "{{ item.username }}"
+      user: 
+        name: '{{ item.username }}'	#appel de la variable        
+        create_home: yes
+        groups: admins
+        shell: /bin/bash
+        password: "{{ item.username }}"
+      with_items: "{{ users }}"
+    - name: ajout clef ssh
+      authorized_key: 
+        user: '{{ item.username }}'
+        state: present
+        #le chemin d'accès à la clé publique
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+      with_items: "{{ users }}"
+...

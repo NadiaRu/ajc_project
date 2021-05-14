@@ -1,0 +1,56 @@
+	ETAPES DU PROJET
+
+- CREER UNE VM ADMIN SUR AZUR
+	* créer les users avec droits admins
+	* dossier accessible à tous avec les playbook (à mettre sur GIT)
+	* créer un dossier "PROJET" présent sur GIT
+	* documentation
+	* configurer GITHUB
+	* installation ANSIBLE
+
+- CREER DES PLAYBOOK ANSIBLE :
+	* création de VM(s)
+		° dimensionnement (espace disque, ram etc...)
+		° installation des outils (shell, htop, tmux, vim, pathogène...)
+	* VMserver :
+		° installation docker/docker-compose
+		° 3 conteners sur une seule VM (version A) / 3 VM avec un seul contener (version B) / deux VM, une avec GITALB et JENKINS et une seconde avec LAMP (version C) :
+			¤ GITLAB
+			¤ LAMP		# penser au load balancer
+			¤ JENKINS
+
+
+- GITLAB :
+	* composantes du site web (en MarkDown)
+	* dépôt python web
+
+- JENKINS :
+	* redéploiement de l'image docker
+
+- LAMP :
+	* création d'un CA ou d'un CA autosigné
+	* installation apache, bind9, php, mysql, django
+	* site web statique (apache)
+	* php (apache)
+	* python web (package django)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
