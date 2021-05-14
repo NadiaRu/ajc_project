@@ -1,0 +1,51 @@
+---
+- name: Installation de Docker sur les VM debian
+  hosts: all
+  tasks:
+    - name: Pré-installation de configuration de la VM
+      apt:
+        pkg: ["curl", "python3-pip", "gnupg", "lsb-release"]
+        state: latest
+        update_cache: yes
+        force_apt_get: yes
+      
+    - name: Install packages to allow apt to use a repository over HTTPS
+      apt:
+        pkg: ["apt-transport-https", "ca-certificates", "software-properties-common"]
+        state: latest
+
+    - name: Add Apt signing key from official docker repository
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+
+    - name: add docker official repository for Debian buster
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
+        state: present
+
+    - name: Index new repo into the cache
+      apt:
+        name: "*"
+        state: latest
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: Installation de Docker
+      apt:
+        pkg: ["docker-ce", "docker-ce-cli", "containerd.io"]
+        state: present
+        update_cache: yes
+              
+    - name: Installation de Docker-compose
+      apt:
+        name: docker-compose
+        state: present
+
+        #    - name : Installation des modules et packages permettant la gestion de docker via ansible
+
+...
+
+
+
+
