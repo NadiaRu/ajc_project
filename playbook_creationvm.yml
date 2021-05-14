@@ -1,0 +1,70 @@
+---
+- name: creation vm azure
+  hosts: localhost
+  connection: local
+  vars:
+   namevm: client1
+   username: client
+
+  tasks:
+  - name: creation groupe de ressources
+    azure_rm_resourcegroup:
+     name: nours_project
+     location: australiaeast
+
+  - name: create virtual network
+    azure_rm_virtualnetwork:
+     resource_group: nours_project
+     name: network
+     address_prefixes: "10.0.0.0/16"
+
+  - name: add subnet
+    azure_rm_subnet:
+     resource_group: nours_project
+     name: subnet
+     address_prefix: "10.0.1.0/24"
+     virtual_network: network
+
+  - name: create public ip adress
+    azure_rm_publicipaddress:
+     resource_group: nours_project
+     allocation_method: Static
+     name: myPublicIP
+
+  - name: Create Network Security Group that allows SSH
+    azure_rm_securitygroup:
+     resource_group: nours_project
+     name: myNetworkSecurityGroup
+     rules:
+      - name: SSH
+        protocol: Tcp
+        destination_port_range: 22
+        access: Allow
+        priority: 1001
+        direction: Inbound
+
+  - name: create virtual network interface card
+    azure_rm_networkinterface:
+     resource_group: nours_project
+     name: myNIC
+     virtual_network: network
+     subnet: subnet
+     public_ip_name: myPublicIP
+     security_group: myNetworkSecurityGroup
+
+  - name: Create VM
+    azure_rm_virtualmachine:
+     resource_group: nours_project
+     name: "{{ namevm }}"
+     vm_size: Standard_DS1_v2
+     admin_username: "{{ username }}"
+     ssh_password_enabled: false
+     ssh_public_keys:
+      - path: /home/{{ username }}/.ssh/authorized_keys
+        key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDqCeDHTHatYZxF7PcjKEO/kM644hhlpUjoykERmzbrs8JqQ/mBnaUbZX0g5zCzbLHsSCO6x7K1xMjS2lxzqLuLG51Fvopop+p4poOXuejwaSSYBJp6jVilFOgpev7D2hYNWFyR5J1PFW7+Ilagn8NpkgoHjgA3qLH9xfO9dBp+ASsIT9b9g0oRfgitNq5pLiawkbihcY5zSv3y1Tb3WgnzJEJ2jA1/o95L/qMQLS/noxYF9L1u1RAmAwhKN+MDcwtR6FktHmNVIt2BQ+eWV5u/XVnXj41zv9/w68lOh00kxP+0t1fy3boJ3inlguhfuQXRddnz64Jf7BpJ0Wt+jHH root@admin
+     network_interfaces: myNIC
+     image:
+      offer: debian-10		
+      publisher: Debian
+      sku: '10'
+      version: latest
