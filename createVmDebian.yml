@@ -3,8 +3,11 @@
   hosts: localhost
   connection: local
   vars:
-   namevm: client1
-   username: client
+   vms: 
+     - vm: "client1"
+     - vm: "gitjen"
+     - vm: "lamp"
+   username: administrateur
 
   tasks:
   - name: creation groupe de ressources
@@ -29,12 +32,13 @@
     azure_rm_publicipaddress:
      resource_group: nours_project
      allocation_method: Static
-     name: myPublicIP
+     name: "{{ item.vm }}-PublicIP"
+    with_items: "{{ vms }}"
 
   - name: Create Network Security Group that allows SSH
     azure_rm_securitygroup:
      resource_group: nours_project
-     name: myNetworkSecurityGroup
+     name: "{{ item.vm }}-nsg"
      rules:
       - name: SSH
         protocol: Tcp
@@ -42,29 +46,32 @@
         access: Allow
         priority: 1001
         direction: Inbound
+    with_items: "{{ vms }}"
 
   - name: create virtual network interface card
     azure_rm_networkinterface:
      resource_group: nours_project
-     name: myNIC
+     name: "{{ item.vm }}-nic"
      virtual_network: network
      subnet: subnet
-     public_ip_name: myPublicIP
-     security_group: myNetworkSecurityGroup
+     public_ip_name: "{{ item.vm }}-PublicIP"
+     security_group: "{{ item.vm }}-nsg"
+    with_items: "{{ vms }}"
 
   - name: Create VM
     azure_rm_virtualmachine:
      resource_group: nours_project
-     name: "{{ namevm }}"
+     name: "{{ item.vm }}"
      vm_size: Standard_DS1_v2
      admin_username: "{{ username }}"
      ssh_password_enabled: false
      ssh_public_keys:
       - path: /home/{{ username }}/.ssh/authorized_keys
         key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDqCeDHTHatYZxF7PcjKEO/kM644hhlpUjoykERmzbrs8JqQ/mBnaUbZX0g5zCzbLHsSCO6x7K1xMjS2lxzqLuLG51Fvopop+p4poOXuejwaSSYBJp6jVilFOgpev7D2hYNWFyR5J1PFW7+Ilagn8NpkgoHjgA3qLH9xfO9dBp+ASsIT9b9g0oRfgitNq5pLiawkbihcY5zSv3y1Tb3WgnzJEJ2jA1/o95L/qMQLS/noxYF9L1u1RAmAwhKN+MDcwtR6FktHmNVIt2BQ+eWV5u/XVnXj41zv9/w68lOh00kxP+0t1fy3boJ3inlguhfuQXRddnz64Jf7BpJ0Wt+jHH root@admin
-     network_interfaces: myNIC
+     network_interfaces: "{{ item.vm }}-nic"
      image:
       offer: debian-10		
       publisher: Debian
       sku: '10'
       version: latest
+    with_items: "{{ vms }}"
