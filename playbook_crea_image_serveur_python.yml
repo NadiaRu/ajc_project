@@ -1,0 +1,19 @@
+---
+- name: Création d'un conteneur contenant un serveur web python
+  hosts: all
+  become: yes
+  tasks:
+          - name: Transfert et décompression de l'archive contenant les fichiers nécessaires
+            unarchive: 
+                    src: /root/nours_project_webpy.zip
+                    dest: /root/
+                    remote_src: yes
+          - name: Changement du répertoire courant et création de l'image docker
+            shell: cd /root/nours_project_webpy/ && docker build -t webpy . 
+            args:
+                    executable: /bin/bash
+          - name: Lancement du conteneur (et donc du serveur)
+            shell: docker run -d -p 8000:8000 webpy
+            args:
+                    executable: /bin/bash
+...
