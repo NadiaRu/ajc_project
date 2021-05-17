@@ -4,6 +4,7 @@ services:
     image: jenkins/jenkins
     container_name: 'jenkins'
     hostname: jenkins.ajcproject.com
+    restart: always
     environment: 
       - TZ=Europe/Paris
     volumes: 
@@ -11,4 +12,25 @@ services:
     ports: 
       - 8080:8080
       - 50000:50000
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    container_name: 'gitlab'
+    hostname: gitlab
+    ports:
+      - '8081:80'
+    environment:
+      TZ: Europe/Paris
+      GITLAB_OMNIBUS_CONFIG: |
+        gitlab_rails['time_zone'] = 'Europe/Paris'
+        gitlab_rails['gitlab_email_from'] = 'nm.rumianteva@yahoo.fr'
+        gitlab_rails['manage_backup_path'] = true
+        gitlab_rails['backup_path'] = "/var/opt/gitlab/backups"
+        gitlab_rails['backup_archive_permissions'] = 0640
+        gitlab_rails['backup_keep_time'] = 604800
+        gitlab_rails['smtp_enable'] = true
+        external_url 'http://104.210.89.208/'
+    volumes:
+      - '/gitlab/etc:/etc/gitlab'
+      - '/gitlab/logs:/var/log/gitlab'
+      - '/gitlab/data/:/var/opt/gitlab'
 
