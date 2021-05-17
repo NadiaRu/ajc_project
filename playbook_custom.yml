@@ -1,5 +1,5 @@
 - name: Install Customs for VMs
-  hosts: all
+  hosts: all:!localhost
   tasks:
     - name: update
       apt:
