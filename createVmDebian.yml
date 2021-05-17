@@ -18,15 +18,15 @@
   - name: create virtual network
     azure_rm_virtualnetwork:
      resource_group: nours_project
-     name: network
-     address_prefixes: "10.0.0.0/16"
+     name: nous_project-vnet
+     address_prefixes: "172.16.0.0/16"
 
   - name: add subnet
     azure_rm_subnet:
      resource_group: nours_project
      name: subnet
-     address_prefix: "10.0.1.0/24"
-     virtual_network: network
+     address_prefix: "172.16.1.0/24"
+     virtual_network: nours_project-vnet
 
   - name: create public ip adress
     azure_rm_publicipaddress:
@@ -52,7 +52,7 @@
     azure_rm_networkinterface:
      resource_group: nours_project
      name: "{{ item.vm }}-nic"
-     virtual_network: network
+     virtual_network: nours_project-vnet
      subnet: subnet
      public_ip_name: "{{ item.vm }}-PublicIP"
      security_group: "{{ item.vm }}-nsg"
