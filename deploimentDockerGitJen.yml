@@ -1,0 +1,8 @@
+---
+- hosts: gitjenserver
+  become: yes
+  tasks:
+    - name: Copy docker compose file
+      copy: src=gitlab_jenkins/docker-compose.yml dest=/root/docker-compose.yml
+    - name: Deploy containers
+      shell: docker-compose up -d
