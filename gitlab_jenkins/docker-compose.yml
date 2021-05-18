@@ -18,6 +18,7 @@ services:
     hostname: gitlab
     ports:
       - '8081:80'
+      - '2281:22'
     environment:
       TZ: Europe/Paris
       GITLAB_OMNIBUS_CONFIG: |
@@ -28,6 +29,7 @@ services:
         gitlab_rails['backup_archive_permissions'] = 0640
         gitlab_rails['backup_keep_time'] = 604800
         gitlab_rails['smtp_enable'] = true
+        gitlab_rails['gitlab_shell_ssh_port'] = 2281
         external_url 'http://104.210.89.208/'
     volumes:
       - '/gitlab/etc:/etc/gitlab'

@@ -3,7 +3,7 @@
   become: yes
   tasks:
     - name: Copy docker compose file
-      copy: src=gitlab_jenkins/docker-compose.yml dest=/root/docker-compose.yml
+      copy: src=docker-compose.yml dest=/root/docker-compose.yml
     - name: change permissions .log
       shell: chown -R 1000:1000 /jenkins-data/
     - name: Deploy containers
