@@ -1,5 +1,16 @@
 version: '3'
 services: 
+  mediawiki:
+    image: mediawiki
+    restart: always
+    ports:
+      - 8082:80
+    links:
+      - db
+    volumes:
+      - /var/www/html/images
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+
   db: 
     image: mariadb:10.2
     volumes: 

@@ -4,8 +4,8 @@
   tasks:
     - name: Copy docker compose file
       copy: src=docker-compose.yml dest=/root/docker-compose.yml
-    - name: Create jekyll-data
-      shell: mkdir /jekyll-data/ 
+    - name: Copy LocalSettings.php for MediaWiki
+      copy: src=LocalSettings.php dest=/root/LocalSettings.php
     - name: Permissions .jenkyll-cache
       shell: chown -R 1000:1000 /jekyll-data/
     - name: Deploy containers
