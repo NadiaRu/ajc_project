@@ -10,4 +10,11 @@ services:
       MYSQL_DATABASE: dbtest
       MYSQL_USER: administrateur
       MYSQL_PASSWORD: administrateur
-
+  
+  jekyll:
+    image: jekyll/jekyll:latest
+    command: jekyll serve --watch --force_polling --verbose
+    ports:
+      - 4000:4000
+    volumes:
+      - /jekyll-data:/srv/jekyll
