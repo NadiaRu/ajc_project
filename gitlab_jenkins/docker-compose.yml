@@ -33,4 +33,14 @@ services:
       - '/gitlab/etc:/etc/gitlab'
       - '/gitlab/logs:/var/log/gitlab'
       - '/gitlab/data/:/var/opt/gitlab'
-
+ 
+  db: 
+    image: mariadb:10.2
+    volumes: 
+      - ${PWD}/mariadb:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: administrateur
+      MYSQL_DATABASE: dbtest
+      MYSQL_USER: administrateur
+      MYSQL_PASSWORD: administrateur

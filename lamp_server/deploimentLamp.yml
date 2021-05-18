@@ -1,0 +1,8 @@
+---
+- hosts: lampserver
+  become: yes
+  tasks:
+    - name: Copy docker compose file
+      copy: src=docker-compose.yml dest=/root/docker-compose.yml
+    - name: Deploy containers
+      shell: docker-compose up -d 
