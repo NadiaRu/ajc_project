@@ -1,0 +1,16 @@
+---
+- name: Création d'un conteneur contenant un serveur web python
+  hosts: lampserver
+  become: yes
+  tasks:
+          - name: Installation de zip
+            apt: name=zip state=present update_cache=yes 
+          - name: Transfert de l'archive contenant les fichiers nécessaires
+            copy: src=/home/lorine/webpy2.zip dest=/root/
+          - name: Décompression de l'archive
+            shell: unzip /root/webpy2.zip -d /root/
+          - name: Changement du répertoire courant et création de l'image docker
+            shell: cd /root/webpy2/ && docker build -t webpy .
+          - name: Lancement du conteneur (et donc du serveur)
+            shell: docker run -d -p 8083:8000 webpy
+...
