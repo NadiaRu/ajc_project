@@ -1,6 +1,6 @@
-#AJC Project - 2021 /  NOURS_PROJECT
+# AJC Project - 2021 /  NOURS_PROJECT
 
-##Objectif du projet: 
+## Objectif du projet: 
 Le projet consiste à mettre en place une chaine d’intégration continu et de déploiement. 
 
 
