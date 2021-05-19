@@ -5,8 +5,8 @@ Le projet consiste à mettre en place une chaine d’intégration continu et de 
 
 ## Avancement du projet
 Une première phase de déploiement de l’infrastructure devra être réalisée (automatisation). Puis la mise en place des outils nécessaires à la configuration de la chaine dite « devops ».
-* => Objectif Atteint.
-* => Déploiement VM Admin + création clients Azure via Ansible playbook.yml (Client/Serveur GitJen/Serveur LAMP) + connexion SSH entre les serveurs
+=> Objectif Atteint.
+=> Déploiement VM Admin + création clients Azure via Ansible playbook.yml (Client/Serveur GitJen/Serveur LAMP) + connexion SSH entre les serveurs
 	
 Pour notre projet nous aurons donc besoin d’un server Gitlab (Azure), de serveurs LAMP (Azure), un serveur Jenkins (Azure), un Active Directory. Les VM déployées devront être customisées [shell : zsh, outils : htop, tmux, vim(+pathogène)]. Le provisionning devra être automatisé au maximum.
 	=> Objectif Atteint.
