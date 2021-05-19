@@ -1,6 +1,7 @@
-AJC Project - 2021 /  NOURS_PROJECT
+#AJC Project - 2021 /  NOURS_PROJECT
 
-Objectif du projet: Le projet consiste à mettre en place une chaine d’intégration continu et de déploiement. 
+##Objectif du projet: 
+Le projet consiste à mettre en place une chaine d’intégration continu et de déploiement. 
 
 
 Une première phase de déploiement de l’infrastructure devra être réalisée (automatisation). Puis la mise en place des outils nécessaires à la configuration de la chaine dite « devops ».
