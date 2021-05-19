@@ -7,6 +7,8 @@
      - vm: "client1"
      - vm: "gitjen"
      - vm: "lamp"
+     - vm: "servervpn"
+     - vm: "testvpn"
    username: administrateur
 
   tasks:
