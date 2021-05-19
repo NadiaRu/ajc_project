@@ -39,6 +39,7 @@ Un accès VPN sera nécessaire pour l’administration des serveurs applicatifs.
 * => Objectif 0/3
 
 
-Contributors - Groupe 3 - https://github.com/NadiaRu/ajc_project
+## Contributors
+Groupe 3 - https://github.com/NadiaRu/ajc_project
 
 BETHENCOURT Lorine, LANDOUZY Remy, LECLERRE Thibaut, RUMIANTCEVA Nadezhda
